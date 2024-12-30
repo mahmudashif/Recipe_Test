@@ -32,3 +32,18 @@
 - Make your necessary changes and upload your new project into your personal GitHub account as a public repository
 - Host your final version on Vercel, Netlify, Firebase or similar platform and prepare your live link.
 - You must submit your "GitHub Link" & "Live Link"
+
+
+
+
+
+# Work Process
+
+- auth add:
+useContext hooks use for authentication
+
+- cart:
+
+bug fix in cart --> i fixed a bug from here which is basically use in childern but didnot mentioned that in the modal
+
+add to cart --> for this, i use mongodb server and database and make a api
