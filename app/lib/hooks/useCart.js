@@ -1,4 +1,3 @@
-// hooks/useCart.js
 import { useState, useCallback, useEffect } from "react";
 import { addToCart, getCart, removeFromCart } from "../api";
 import { useAuth } from "@/app/contexts/AuthContext";
@@ -10,21 +9,12 @@ export const useCart = () => {
   const [error, setError] = useState(null);
   const { token, user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      fetchCart();
-    } else {
-      const localCart = localStorage.getItem('cart');
-      if (localCart) setCart(JSON.parse(localCart));
-    }
-  }, [user]);
-
   const fetchCart = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       const cartData = await getCart(token);
-console.log(cartData,"cartdata");
+      console.log(cartData, "cartdata");
 
       // Fetch recipe details for each cart item
       const cartWithDetails = await Promise.all(
@@ -36,7 +26,7 @@ console.log(cartData,"cartdata");
           };
         })
       );
-      console.log(cartWithDetails,"cartdeatils")
+      console.log(cartWithDetails, "cartdetails");
 
       setCart(cartWithDetails);
     } catch (err) {
@@ -46,28 +36,36 @@ console.log(cartData,"cartdata");
     }
   }, [token]);
 
- // useCart hook - modify addMealToCart
-const addMealToCart = async (meal) => {
-  if (user) {
-    try {
-      await addToCart(meal.idMeal, token);
-      await fetchCart();
-    } catch (err) {
-      setError(err.message);
-      throw err;
+  useEffect(() => {
+    if (user) {
+      fetchCart();
+    } else {
+      const localCart = localStorage.getItem("cart");
+      if (localCart) setCart(JSON.parse(localCart));
     }
-  } else {
-    const cartItem = {
-      idMeal: meal.idMeal,
-      strMeal: meal.strMeal,
-      strMealThumb: meal.strMealThumb,
-      strCategory: meal.strCategory
-    };
-    const updatedCart = [...cart, cartItem];
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  }
-};
+  }, [user, fetchCart]);
+
+  const addMealToCart = async (meal) => {
+    if (user) {
+      try {
+        await addToCart(meal.idMeal, token);
+        await fetchCart();
+      } catch (err) {
+        setError(err.message);
+        throw err;
+      }
+    } else {
+      const cartItem = {
+        idMeal: meal.idMeal,
+        strMeal: meal.strMeal,
+        strMealThumb: meal.strMealThumb,
+        strCategory: meal.strCategory,
+      };
+      const updatedCart = [...cart, cartItem];
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+    }
+  };
 
   const removeMealFromCart = async (mealId) => {
     if (user) {
@@ -79,9 +77,9 @@ const addMealToCart = async (meal) => {
         throw err;
       }
     } else {
-      const updatedCart = cart.filter(item => item.idMeal !== mealId);
+      const updatedCart = cart.filter((item) => item.idMeal !== mealId);
       setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
   };
 
