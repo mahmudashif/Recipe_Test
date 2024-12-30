@@ -24,17 +24,19 @@ export const useCart = () => {
       setLoading(true);
       setError(null);
       const cartData = await getCart(token);
+console.log(cartData,"cartdata");
 
       // Fetch recipe details for each cart item
       const cartWithDetails = await Promise.all(
         cartData.cart.map(async (item) => {
-          const { data } = await HttpKit.getRecipeDetails(item.mealId);
+          const recipeData = await HttpKit.getRecipeDetails(item.mealId);
           return {
             ...item,
-            ...data,
+            ...recipeData,
           };
         })
       );
+      console.log(cartWithDetails,"cartdeatils")
 
       setCart(cartWithDetails);
     } catch (err) {

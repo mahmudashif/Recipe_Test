@@ -1,5 +1,5 @@
 // src/lib/api.js - API utility functions
-export const API_BASE_URL = 'http://localhost:5000/api';
+export const API_BASE_URL = 'https://recipe-server-jade.vercel.app/api';
 
 // Authentication API calls
 export const loginUser = async (email, password) => {
