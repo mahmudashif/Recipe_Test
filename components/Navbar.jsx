@@ -1,7 +1,7 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import { useAuth } from '@/app/contexts/AuthContext';
+"use client";
+import React from "react";
+import Link from "next/link";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -29,13 +29,12 @@ const Navbar = () => {
             <Link href="/recipes" className="hover:text-blue-200">
               Recipes
             </Link>
-
+            <Link href="/cart" className="hover:text-blue-200">
+              Cart
+            </Link>
             {user ? (
               <div className="flex items-center space-x-4">
                 {/* Cart Link with potential counter */}
-                <Link href="/cart" className="hover:text-blue-200">
-                  Cart
-                </Link>
 
                 {/* User dropdown */}
                 <div className="relative group">
@@ -43,10 +42,11 @@ const Navbar = () => {
                     <span className="font-medium">{user.name}</span>
                     <span className="text-sm text-blue-200">{user.email}</span>
                   </button>
-                  
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
+
+                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
                     <div className="px-4 py-2 text-sm text-gray-700 border-b">
-                      Signed in as<br />
+                      Signed in as
+                      <br />
                       <span className="font-medium">{user.email}</span>
                     </div>
                     <button
@@ -60,13 +60,10 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link 
-                  href="/login"
-                  className="hover:text-blue-200"
-                >
+                <Link href="/login" className="hover:text-blue-200">
                   Login
                 </Link>
-                <Link 
+                <Link
                   href="/registration"
                   className="bg-white text-blue-600 px-4 py-2 rounded-md hover:bg-blue-100"
                 >
